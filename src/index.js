@@ -6,19 +6,19 @@ let replacesRegex = {
     subst: ``,
   },
   feetAndInchesAndFraction: {
-    regex: /(\-*?\d+\s*?)ft\s*?(\d+\s*?(?!\d+\⁄))\s*?(\d+?)\⁄(\d+?)/gim,
+    regex: /(\-*?\d+\.?\d*?)\s*?ft\s*?(\d+\s*?(?!\d+\⁄))\s*?(\d+?)\⁄(\d+?)/gim,
     subst: `(($1*12) + ($2 + $3/$4))`,
   },
   feetAndInches: {
-    regex: /(\-*?\d+\s*?)ft\s*?(\d+)/gim,
+    regex: /(\-*?\d+\.?\d*?)\s*?ft\s*?(\d+)/gim,
     subst: `(($1*12) + $2)`,
   },
   feetAndFractions: {
-    regex: /(\-*?\d+\s*?)ft\s*?(\d+)\⁄(\d+)/gim,
+    regex: /(\-*?\d+\.?\d*?)\s*?ft\s*?(\d+)\⁄(\d+)/gim,
     subst: `(($1*12) + $2/$3)`,
   },
   feet: {
-    regex: /(\-*?\d+)\s*?ft/gim,
+    regex: /(\-*?\d+\.?\d*?)\s*?ft/gim,
     subst: `($1 * 12)`,
   },
   inchesAndFractions: {
