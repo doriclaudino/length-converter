@@ -6,19 +6,19 @@ let replacesRegex = {
     subst: ``,
   },
   feetAndInchesAndFraction: {
-    regex: /(\-*?\d+\.?\d*?)\s*?ft\s*?(\d+\s*?(?!\d+\⁄))\s*?(\d+?)\⁄(\d+?)/gim,
-    subst: `(($1*12) + ($2 + $3/$4))`,
+    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?(\d+\s*?(?!\d+\⁄))\s*?(\d+)\⁄(\d+)/gim,
+    subst: `(($1 * 12) + ($2 + $3/$4))`,
   },
   feetAndInches: {
-    regex: /(\-*?\d+\.?\d*?)\s*?ft\s*?(\d+)/gim,
-    subst: `(($1*12) + $2)`,
+    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?(\d+\.?\d+|\.?\d+)/gim,
+    subst: `(($1 * 12) + $2)`,
   },
   feetAndFractions: {
-    regex: /(\-*?\d+\.?\d*?)\s*?ft\s*?(\d+)\⁄(\d+)/gim,
-    subst: `(($1*12) + $2/$3)`,
+    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?(\d+)\⁄(\d+)/gim,
+    subst: `(($1 * 12) + $2/$3)`,
   },
   feet: {
-    regex: /(\-*?\d+\.?\d*?)\s*?ft/gim,
+    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?/gim,
     subst: `($1 * 12)`,
   },
   inchesAndFractions: {
@@ -41,11 +41,20 @@ let replacesRegex = {
 
 function parser(expression = "") {
   let temp = expression;
-
-  Object.values(replacesRegex).forEach(({ regex, subst }) => {
+  let steps = {};
+  Object.keys(replacesRegex).forEach((stepName) => {
+    let { regex, subst } = replacesRegex[stepName];
     temp = temp.replace(regex, subst);
+    if (expression != temp)
+      steps[stepName] = { expression: temp, regex, subst };
   });
-  const result = eval(temp);
+
+  let result;
+  try {
+    result = eval(temp);
+  } catch (error) {
+    return `str: ${temp} err: ${error} steps:${JSON.stringify(steps, null, 2)}`;
+  }
   return result;
 }
 
