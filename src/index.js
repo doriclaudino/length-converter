@@ -1,28 +1,31 @@
 import "./index.css";
 
-let replacesRegex = {
+/**
+ * regex rules sequence
+ */
+const replacesRegex = {
   keepFractionSpaces: {
     regex: /(\s+)(?!(\d\⁄))/gim,
     subst: ``,
   },
   feetAndInchesAndFraction: {
-    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?(\d+\s*?(?!\d+\⁄))\s*?(\d+)\⁄(\d+)/gim,
+    regex: /(\-?\.?\d+\.?\d*?)ft(\d+)\s(\d+)\⁄(\d+)/gim,
     subst: `(($1 * 12) + ($2 + $3/$4))`,
   },
   feetAndInches: {
-    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?(\d+\.?\d+|\.?\d+)/gim,
+    regex: /(\-?\.?\d+\.?\d*?)ft(\d+\.?\d+|\.?\d+)/gim,
     subst: `(($1 * 12) + $2)`,
   },
   feetAndFractions: {
-    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?(\d+)\⁄(\d+)/gim,
+    regex: /(\-?\.?\d+\.?\d*?)ft\s(\d+)\⁄(\d+)/gim,
     subst: `(($1 * 12) + $2/$3)`,
   },
   feet: {
-    regex: /(\-?\.?\d+\.?\d*?)\s*?ft\s*?/gim,
+    regex: /(\-?\.?\d+\.?\d*?)ft/gim,
     subst: `($1 * 12)`,
   },
   inchesAndFractions: {
-    regex: /(\-*?\d+\s*?)\s*?(\d+)\⁄(\d+)/gim,
+    regex: /(\-*?\d+)\s(\d+)\⁄(\d+)/gim,
     subst: `($1 + $2/$3)`,
   },
   fractions: {

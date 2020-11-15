@@ -48,7 +48,7 @@ test("check result", () => {
 
 test("check result full length", () => {
   expect(parser(`.5ft3 1⁄4`)).toBe(9.25);
-  expect(parser(`2.5ft 3 1⁄4 + 15⁄16`)).toBe(34.5625);
+  expect(parser(`2.5ft 3 1⁄4 + 15⁄16`)).toBe(34.1875);
   expect(parser(`2.5ft 3`)).toBe(33);
-  expect(parser(`(2.5ft 3 1⁄4 + 15⁄16)   ×   2`)).toBe(69.125);
+  expect(parser(`(2.5ft 3 1⁄4 + 15⁄16)   ×   2`)).toBe(68.375);
 });
